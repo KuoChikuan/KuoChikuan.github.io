@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言：回家了4天，啥都没有干，就是学了科目三，做好了晚上复习复变的计划被练车身体太累给取消了。。幸好科目三过了（下周可以拿证了！可以在大学城飙车了，无奈老爸不给我把家里的车开过来哈哈哈，只能开共享汽车了）好了，不多说了，最近看的东西有点杂，不过也是在复习之前学过的东西，方便自己加深记忆。1.HTTP（熟悉到再也不能熟悉了，之前暑假看过书，看过视频了） HTTP是基于TCP/IP协议通信协议来传递数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="11.2">
+<meta property="og:url" content="http://yoursite.com/2018/11/02/11-2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前言：回家了4天，啥都没有干，就是学了科目三，做好了晚上复习复变的计划被练车身体太累给取消了。。幸好科目三过了（下周可以拿证了！可以在大学城飙车了，无奈老爸不给我把家里的车开过来哈哈哈，只能开共享汽车了）好了，不多说了，最近看的东西有点杂，不过也是在复习之前学过的东西，方便自己加深记忆。1.HTTP（熟悉到再也不能熟悉了，之前暑假看过书，看过视频了） HTTP是基于TCP/IP协议通信协议来传递数">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="d:/blog/source/img/http.jpg">
+<meta property="og:updated_time" content="2018-11-02T12:08:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="11.2">
+<meta name="twitter:description" content="前言：回家了4天，啥都没有干，就是学了科目三，做好了晚上复习复变的计划被练车身体太累给取消了。。幸好科目三过了（下周可以拿证了！可以在大学城飙车了，无奈老爸不给我把家里的车开过来哈哈哈，只能开共享汽车了）好了，不多说了，最近看的东西有点杂，不过也是在复习之前学过的东西，方便自己加深记忆。1.HTTP（熟悉到再也不能熟悉了，之前暑假看过书，看过视频了） HTTP是基于TCP/IP协议通信协议来传递数">
+<meta name="twitter:image" content="d:/blog/source/img/http.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/02/11-2/">
+
+
+
+
+
+  <title>11.2 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/02/11-2/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">11.2</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-02T20:08:02+08:00">
+                2018-11-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h5 id="前言：回家了4天，啥都没有干，就是学了科目三，做好了晚上复习复变的计划被练车身体太累给取消了。。幸好科目三过了（下周可以拿证了！可以在大学城飙车了，无奈老爸不给我把家里的车开过来哈哈哈，只能开共享汽车了）好了，不多说了，最近看的东西有点杂，不过也是在复习之前学过的东西，方便自己加深记忆。"><a href="#前言：回家了4天，啥都没有干，就是学了科目三，做好了晚上复习复变的计划被练车身体太累给取消了。。幸好科目三过了（下周可以拿证了！可以在大学城飙车了，无奈老爸不给我把家里的车开过来哈哈哈，只能开共享汽车了）好了，不多说了，最近看的东西有点杂，不过也是在复习之前学过的东西，方便自己加深记忆。" class="headerlink" title="前言：回家了4天，啥都没有干，就是学了科目三，做好了晚上复习复变的计划被练车身体太累给取消了。。幸好科目三过了（下周可以拿证了！可以在大学城飙车了，无奈老爸不给我把家里的车开过来哈哈哈，只能开共享汽车了）好了，不多说了，最近看的东西有点杂，不过也是在复习之前学过的东西，方便自己加深记忆。"></a>前言：回家了4天，啥都没有干，就是学了科目三，做好了晚上复习复变的计划被练车身体太累给取消了。。幸好科目三过了（下周可以拿证了！可以在大学城飙车了，无奈老爸不给我把家里的车开过来哈哈哈，只能开共享汽车了）好了，不多说了，最近看的东西有点杂，不过也是在复习之前学过的东西，方便自己加深记忆。</h5><h4 id="1-HTTP（熟悉到再也不能熟悉了，之前暑假看过书，看过视频了）"><a href="#1-HTTP（熟悉到再也不能熟悉了，之前暑假看过书，看过视频了）" class="headerlink" title="1.HTTP（熟悉到再也不能熟悉了，之前暑假看过书，看过视频了）"></a>1.HTTP（熟悉到再也不能熟悉了，之前暑假看过书，看过视频了）</h4><blockquote>
+<p>HTTP是基于TCP/IP协议通信协议来传递数据（HTML文件、图片文件、查询结果等），但它不涉及数据包（packet）传输，主要规定了客户端和服务器之间的通信格式，默认80端口。<br>HTTP请求方法有GET、HEAD、PUT、DELETE、POST，每种方法规定了客户与服务器联系的类型不同。(一般也是用get和post)<br>HTTP协议是无状态的，HTTP协议自身不对请求和响应之间的通信状态进行保存。任何两次请求之间都没有依赖关系。这样的目的是为了更快地处理大量事务，确保协议的可伸缩性。<br>Http报文包括请求报文和响应报文两大部分，其中请求报文由请求行（request line）、请求头（header）、空行和请求体四个部分组成。而响应报文由状态行、响应头部、空行和响应体四个部分组成。<br>==空行==：最后一个请求头之后是一个空行，这个行非常重要，它表示请求头已经结束，接下来的是请求正文。  </p>
+</blockquote>
+<p>终于搞懂了GET和POST的区别了：</p>
+<ul>
+<li>GET在浏览器回退时是无害的，而POST会再次提交请求。</li>
+<li>GET请求会被浏览器主动缓存，而POST不会，除非手动设置。</li>
+<li>GET请求参数会被完整保留在浏览器历史记录里，而POST中的参数不会被保留。</li>
+<li>GET请求在URL中传送的参数是有长度限制的，而POST没有限制。</li>
+<li>GET参数通过URL传递，POST放在Request body中。  </li>
+</ul>
+<blockquote>
+<p>持久连接的特点（keep-alive）：主要任意一端没有明确提出断开连接，则保持TCP连接状态。持久连接的好处在于减少了TCP连接的重复建立和断开所造成的额外开销，减轻了服务器端的负载。另外， 减少开销的那部分时间，使HTTP请求和响应能够更早地结束，这样Web页面的显示速度也就相应提高了。<br>管线化：持久连接使得多数请求以管线化方式发送成为可能，这样就能够做到同时并行发送多个请求，而不需要一个接一个地等待响应了。通俗地讲，请求打包一次传输过去，响应打包一次传递回来。管线化的前提是在持久连接下。管道机制则是允许浏览器同时发出这十个请求，但是服务器还是按照顺序，先回应A请求，完成后再回应B请求。  </p>
+</blockquote>
+<p>持久连接：请求1 -&gt; 响应1 -&gt; 请求2 -&gt; 响应2 -&gt; 请求3 -&gt; 响应3<br>管线化方式：请求1 -&gt; 请求2 -&gt; 请求3 -&gt; 响应1 -&gt; 响应2 -&gt; 响应3<br><img src="D:/blog/source/img/http.jpg" alt="HTTP"><br>找了一张图，果断上！</p>
+<h4 id="2-Promise（emmm，博客是有比较多的Promise-的了，只不过有时候看到其他介绍Promise而博客没有的我就记录一下而已）"><a href="#2-Promise（emmm，博客是有比较多的Promise-的了，只不过有时候看到其他介绍Promise而博客没有的我就记录一下而已）" class="headerlink" title="2.Promise（emmm，博客是有比较多的Promise 的了，只不过有时候看到其他介绍Promise而博客没有的我就记录一下而已）"></a>2.Promise（emmm，博客是有比较多的Promise 的了，只不过有时候看到其他介绍Promise而博客没有的我就记录一下而已）</h4><blockquote>
+<p>回调：来看一些情况：  </p>
+<ol>
+<li>回调函数执行多次</li>
+<li>回调函数没有执行</li>
+<li>回调函数有时同步执行有时异步执行  </li>
+</ol>
+</blockquote>
+<p>对于这些情况，就可能要在回调函数中做些处理，且每次执行回调函数的时候就要做这些处理，这就有很多重复的代码。  </p>
+<h5 id="不开玩笑，下面这些内容我看了一天（还是没怎么看懂）"><a href="#不开玩笑，下面这些内容我看了一天（还是没怎么看懂）" class="headerlink" title="不开玩笑，下面这些内容我看了一天（还是没怎么看懂）"></a>不开玩笑，下面这些内容我看了一天（还是没怎么看懂）</h5><p>==回调地狱==：<br>现在要找出一个目录中最大的文件，处理步骤应该是： </p>
+<ol>
+<li>用 <code>fs.readdir</code> 获取目录中的文件列表</li>
+<li>循环遍历文件，使用 <code>fs.stat</code> 获取文件信息</li>
+<li>比较找出最大文件；</li>
+<li>以最大文件的文件名为参数调用回调。  </li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">findLargest</span>(<span class="params">dir, cb</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// 读取目录下的所有文件</span></span><br><span class="line">  fs.readdir(dir, <span class="function"><span class="keyword">function</span>(<span class="params">er,files</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(er) <span class="keyword">return</span> cb(er);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> counter = files.length;</span><br><span class="line">    <span class="keyword">var</span> errored = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">var</span> stats = [];</span><br><span class="line"></span><br><span class="line">    files.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">file, index</span>)</span>&#123;</span><br><span class="line">      <span class="comment">//读取文件信息</span></span><br><span class="line">      fs.stat(path.join(dir,file), <span class="function"><span class="keyword">function</span>(<span class="params">er,stat</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(errored) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">if</span>(er) &#123;</span><br><span class="line">          errored = <span class="literal">true</span>;</span><br><span class="line">          <span class="keyword">return</span> cb(er);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        stats[index] = stat;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 事先算好有多少个文件，读完1个文件信息，计数减1，当为0时，说明读取完毕，此时执行最终的比较操作</span></span><br><span class="line">        <span class="keyword">if</span>(--counter == <span class="number">0</span>) &#123;</span><br><span class="line"></span><br><span class="line">          <span class="keyword">var</span> largest = stats</span><br><span class="line">              .filter(<span class="function"><span class="keyword">function</span>(<span class="params">stat</span>) </span>&#123; <span class="keyword">return</span> stat.isFile() &#125;)</span><br><span class="line">              .reduce(<span class="function"><span class="keyword">function</span>(<span class="params">prev, next</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (prev.size &gt; next.size) <span class="keyword">return</span> prev </span><br><span class="line">                <span class="keyword">return</span> next</span><br><span class="line">              &#125;)</span><br><span class="line">            cb(<span class="literal">null</span>, files[stats.indexOf(largest)])</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">findLargest(<span class="string">'./'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">er,filename</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(er) <span class="keyword">return</span> <span class="built_in">console</span>.error(er)</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'largest file was:'</span>, filename)</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Promise写法</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> readDir = <span class="function"><span class="keyword">function</span>(<span class="params">dir</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">    fs.readdir(dir, <span class="function"><span class="keyword">function</span>(<span class="params">err, files</span>)</span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(err) reject(err);</span><br><span class="line">      resolve(files);</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> stat = <span class="function"><span class="keyword">function</span>(<span class="params">path</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>)</span>&#123;</span><br><span class="line">    fs.stat(path, <span class="function"><span class="keyword">function</span>(<span class="params">err, stat</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(err) reject(err);</span><br><span class="line">      resolve(stat);</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">findLargest</span>(<span class="params">dir</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> readDir(dir)</span><br><span class="line">    .then(<span class="function"><span class="keyword">function</span>(<span class="params">files</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">let</span> promises = files.map(<span class="function"><span class="params">file</span> =&gt;</span> stat(path.join(dir, file)))</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">Promise</span>.all(promise).then(<span class="function"><span class="keyword">function</span>(<span class="params">stats</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> &#123; stats, files&#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">let</span> largest = data.stats</span><br><span class="line">          .filter(<span class="function"><span class="keyword">function</span>(<span class="params">stat</span>) </span>&#123; <span class="keyword">return</span> stat.isFile() &#125;)</span><br><span class="line">          .reduce(<span class="function">(<span class="params">prev, next</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span>(prev.size &gt; next.size) <span class="keyword">return</span> prev;</span><br><span class="line">            <span class="keyword">return</span> next;</span><br><span class="line">          &#125;)</span><br><span class="line">      <span class="keyword">return</span> data.files[data.stats.indexOf(largest)]</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="嵌套和缩进只是回调地狱的一个梗而已，它导致的问题远非嵌套导致的可读性降低而已。-但是Promise使得上述问题都得到解决。"><a href="#嵌套和缩进只是回调地狱的一个梗而已，它导致的问题远非嵌套导致的可读性降低而已。-但是Promise使得上述问题都得到解决。" class="headerlink" title="嵌套和缩进只是回调地狱的一个梗而已，它导致的问题远非嵌套导致的可读性降低而已。,但是Promise使得上述问题都得到解决。"></a>嵌套和缩进只是回调地狱的一个梗而已，它导致的问题远非嵌套导致的可读性降低而已。,但是<code>Promise</code>使得上述问题都得到解决。</h4><p>来个红绿灯问题：红灯三秒亮一次，绿灯一秒亮一次，黄灯2秒亮一次；如何让三个灯不断交替重复亮灯？（用 Promse 实现）：  </p>
+<pre><code class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">red</span>(<span class="params"></span>) </span>{
+  <span class="built_in">console</span>.log(<span class="string">'red'</span>);
+}
+
+<span class="function"><span class="keyword">function</span> <span class="title">green</span>(<span class="params"></span>) </span>{
+  <span class="built_in">console</span>.log(<span class="string">'green'</span>);
+}
+
+<span class="function"><span class="keyword">function</span> <span class="title">yellow</span>(<span class="params"></span>)</span>{
+  <span class="built_in">console</span>.log(<span class="string">'yellow'</span>);
+}
+
+<span class="keyword">var</span> light = <span class="function"><span class="keyword">function</span>(<span class="params">timer, cb</span>) </span>{
+  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>{
+    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+      cb();
+      resolve();
+    }, timer);
+  });
+};
+
+<span class="keyword">var</span> step = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+  <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+    <span class="keyword">return</span> light(<span class="number">3000</span>, red);
+  }).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+    <span class="keyword">return</span> light(<span class="number">2000</span>, green);
+  }).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+    <span class="keyword">return</span> light(<span class="number">1000</span>, yellow);
+  }).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+    step();
+  });
+}
+
+step();
+</code></pre>
+<h5 id="还有很多知识点我就不搬过来了，希望自己能够记得吧。。（难）"><a href="#还有很多知识点我就不搬过来了，希望自己能够记得吧。。（难）" class="headerlink" title="还有很多知识点我就不搬过来了，希望自己能够记得吧。。（难）"></a>还有很多知识点我就不搬过来了，希望自己能够记得吧。。（难）</h5>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/23/杂文/" rel="next" title="杂文">
+                <i class="fa fa-chevron-left"></i> 杂文
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/08/HTTP常考题/" rel="prev" title="HTTP常考题">
+                HTTP常考题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#前言：回家了4天，啥都没有干，就是学了科目三，做好了晚上复习复变的计划被练车身体太累给取消了。。幸好科目三过了（下周可以拿证了！可以在大学城飙车了，无奈老爸不给我把家里的车开过来哈哈哈，只能开共享汽车了）好了，不多说了，最近看的东西有点杂，不过也是在复习之前学过的东西，方便自己加深记忆。"><span class="nav-number">1.</span> <span class="nav-text">前言：回家了4天，啥都没有干，就是学了科目三，做好了晚上复习复变的计划被练车身体太累给取消了。。幸好科目三过了（下周可以拿证了！可以在大学城飙车了，无奈老爸不给我把家里的车开过来哈哈哈，只能开共享汽车了）好了，不多说了，最近看的东西有点杂，不过也是在复习之前学过的东西，方便自己加深记忆。</span></a></li></ol><li class="nav-item nav-level-4"><a class="nav-link" href="#1-HTTP（熟悉到再也不能熟悉了，之前暑假看过书，看过视频了）"><span class="nav-number"></span> <span class="nav-text">1.HTTP（熟悉到再也不能熟悉了，之前暑假看过书，看过视频了）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Promise（emmm，博客是有比较多的Promise-的了，只不过有时候看到其他介绍Promise而博客没有的我就记录一下而已）"><span class="nav-number"></span> <span class="nav-text">2.Promise（emmm，博客是有比较多的Promise 的了，只不过有时候看到其他介绍Promise而博客没有的我就记录一下而已）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#不开玩笑，下面这些内容我看了一天（还是没怎么看懂）"><span class="nav-number">1.</span> <span class="nav-text">不开玩笑，下面这些内容我看了一天（还是没怎么看懂）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#嵌套和缩进只是回调地狱的一个梗而已，它导致的问题远非嵌套导致的可读性降低而已。-但是Promise使得上述问题都得到解决。"><span class="nav-number"></span> <span class="nav-text">嵌套和缩进只是回调地狱的一个梗而已，它导致的问题远非嵌套导致的可读性降低而已。,但是Promise使得上述问题都得到解决。</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#还有很多知识点我就不搬过来了，希望自己能够记得吧。。（难）"><span class="nav-number">1.</span> <span class="nav-text">还有很多知识点我就不搬过来了，希望自己能够记得吧。。（难）</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

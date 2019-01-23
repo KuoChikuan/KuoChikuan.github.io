@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="今天去Express官网看了一下教程，然后就看到了路由，接着就看到了“路由句柄”这个东西(它是这样解释的)：可以为请求处理提供多个回调函数，其行为类似 中间件。唯一的区别是这些回调函数有可能调用 next(&amp;apos;route&amp;apos;) 方法而略过其他路由回调函数。可以利用该机制为路由定义前提条件，如果在现有路径上继续执行没有意义，则可将控制权交给剩下的路径。路由句柄有多种形式，可以是一个函">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Express">
+<meta property="og:url" content="http://yoursite.com/2018/07/17/Express/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="今天去Express官网看了一下教程，然后就看到了路由，接着就看到了“路由句柄”这个东西(它是这样解释的)：可以为请求处理提供多个回调函数，其行为类似 中间件。唯一的区别是这些回调函数有可能调用 next(&amp;apos;route&amp;apos;) 方法而略过其他路由回调函数。可以利用该机制为路由定义前提条件，如果在现有路径上继续执行没有意义，则可将控制权交给剩下的路径。路由句柄有多种形式，可以是一个函">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2018/07/17/img/demo2.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/17/img/demo3.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/17/img/demo4.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/17/img/res.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/17/img/router.png">
+<meta property="og:updated_time" content="2018-07-25T01:30:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Express">
+<meta name="twitter:description" content="今天去Express官网看了一下教程，然后就看到了路由，接着就看到了“路由句柄”这个东西(它是这样解释的)：可以为请求处理提供多个回调函数，其行为类似 中间件。唯一的区别是这些回调函数有可能调用 next(&amp;apos;route&amp;apos;) 方法而略过其他路由回调函数。可以利用该机制为路由定义前提条件，如果在现有路径上继续执行没有意义，则可将控制权交给剩下的路径。路由句柄有多种形式，可以是一个函">
+<meta name="twitter:image" content="http://yoursite.com/2018/07/17/img/demo2.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/17/Express/">
+
+
+
+
+
+  <title>Express | Hexo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/17/Express/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Express</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-17T23:40:48+08:00">
+                2018-07-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="今天去Express官网看了一下教程，然后就看到了路由，接着就看到了“路由句柄”这个东西-它是这样解释的-："><a href="#今天去Express官网看了一下教程，然后就看到了路由，接着就看到了“路由句柄”这个东西-它是这样解释的-：" class="headerlink" title="今天去Express官网看了一下教程，然后就看到了路由，接着就看到了“路由句柄”这个东西(它是这样解释的)："></a>今天去Express官网看了一下教程，然后就看到了路由，接着就看到了“路由句柄”这个东西(它是这样解释的)：</h4><pre><code>可以为请求处理提供多个回调函数，其行为类似 中间件。唯一的区别是这些回调函数有可能调用 next(&apos;route&apos;) 方法而略过其他路由回调函数。可以利用该机制为路由定义前提条件，如果在现有路径上继续执行没有意义，则可将控制权交给剩下的路径。路由句柄有多种形式，可以是一个函数、一个函数数组，或者是两者混合。
+</code></pre><h4 id="来看几个demo："><a href="#来看几个demo：" class="headerlink" title="来看几个demo："></a>来看几个demo：</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">   app.get(<span class="string">'/example/a'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  res.send(<span class="string">'Hello from A!'</span>);</span><br><span class="line">&#125;);  <span class="comment">//我监听的端口号是8081，这个会在页面上显示send的内容</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">"express"</span>);</span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/example'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//res.send("hello world");</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'response will be sent by the next function...'</span>);</span><br><span class="line">    next();</span><br><span class="line">&#125;,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">    res.send(<span class="string">"Hello from A!"</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> server = app.listen(<span class="number">8081</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> host = server.address().address;</span><br><span class="line">    <span class="keyword">var</span> port = server.address().port;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"应用实例，访问地址为 http://%s:%s"</span>,host,port);</span><br><span class="line">&#125;)   <span class="comment">//这样的话网页会输出'Hello from A！'</span></span><br></pre></td></tr></table></figure>
+<p>这个demo来看看效果：<br><img src="../img/demo2.png" alt="demo2"><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">"express"</span>);</span><br><span class="line">   <span class="keyword">var</span> app = express();</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/example'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//res.send("hello world");</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'response will be sent by the next function...'</span>);</span><br><span class="line">    <span class="comment">//next();</span></span><br><span class="line">&#125;,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">    res.send(<span class="string">"Hello from A!"</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> server = app.listen(<span class="number">8081</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> host = server.address().address;</span><br><span class="line">    <span class="keyword">var</span> port = server.address().port;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"应用实例，访问地址为 http://%s:%s"</span>,host,port);</span><br><span class="line">&#125;) <span class="comment">//这个的话网站一直卡着，因为next()没有被调用，请求会被挂起，下一个回调没法执行。</span></span><br></pre></td></tr></table></figure></p>
+<p>这个demo来看看效果：<br><img src="../img/demo3.png" alt="demo2"><br><img src="../img/demo4.png" alt="demo2"></p>
+<h4 id="这个时候你应该知道next的作用了："><a href="#这个时候你应该知道next的作用了：" class="headerlink" title="这个时候你应该知道next的作用了："></a>这个时候你应该知道next的作用了：</h4><pre><code>我们在定义express中间件函数的时候都会将第三个参数定义为next，这个next就是我们今天的主角，next函数主要负责将控制权交给下一个中间件，如果当前中间件没有终结请求，并且next没有被调用，那么请求将被挂起，后边定义的中间件将得不到被执行的机会。
+</code></pre><h5 id="关于next还有一点就是要说的就是，如果不调用next-，则应该发送一个响应到客户端：res-send-res-json-res-render-……"><a href="#关于next还有一点就是要说的就是，如果不调用next-，则应该发送一个响应到客户端：res-send-res-json-res-render-……" class="headerlink" title="关于next还有一点就是要说的就是，如果不调用next()，则应该发送一个响应到客户端：res.send,res.json,res.render ……"></a>关于next还有一点就是要说的就是，如果不调用next()，则应该发送一个响应到客户端：res.send,res.json,res.render ……</h5><h4 id="Express的路由响应方法："><a href="#Express的路由响应方法：" class="headerlink" title="Express的路由响应方法："></a>Express的路由响应方法：</h4><p><img src="../img/res.png" alt="res">    </p>
+<h4 id="记住一下路由的express-Router写法！"><a href="#记住一下路由的express-Router写法！" class="headerlink" title="记住一下路由的express.Router写法！"></a>记住一下路由的express.Router写法！</h4><p><img src="../img/router.png" alt="res"> </p>
+<h4 id="Express中cookie和session："><a href="#Express中cookie和session：" class="headerlink" title="Express中cookie和session："></a>Express中cookie和session：</h4><h5 id="cookie的选项："><a href="#cookie的选项：" class="headerlink" title="cookie的选项："></a>cookie的选项：</h5><p>domain：控制跟cookie关联的域名，将cookie分配给特定的子域名，可是不能将cookie设置跟服务器不一样的域名，这样cookie什么都不会做。<br>path：控制应用这个cookie的路径，可是有一点注意的是通配路径，比如是”/“，cookie会应用到所有页面上；假如使/fpp，cookie也会应用到/fpp，/fpp/tpp等路径上。<br>maxAge：cookie生存时间，单位为毫秒。<br>secure：属性值为Boolean，true的话指定该cookie只通过HTTPS传输。<br>httpOnly：属性值也是Boolean，true表明cookie只能由服务器修改。<br>signed：设为true会对cookie签名，这样就需要用res.signedCookies而不是res.cookie访问它。被修改的签名cookie会被服务器拒绝，并且cookie会重置为它的原始值。</p>
+<h5 id="session"><a href="#session" class="headerlink" title="session"></a>session</h5><p>resave : 是指每次请求都重新设置session cookie，假设你的cookie是10分钟过期，每次请求都会再设置10分钟<br>saveUninitialized: 是指无论有没有session cookie，每次请求都设置个session cookie ，默认给个标示为 connect.sid<br>secure: 应用在https<br>secret：用secret进行签名保证存在cookie中的connect.sid是本服务器上次生成的。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/17/js-note/" rel="next" title="js note">
+                <i class="fa fa-chevron-left"></i> js note
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/18/express-notice/" rel="prev" title="express-notice">
+                express-notice <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#今天去Express官网看了一下教程，然后就看到了路由，接着就看到了“路由句柄”这个东西-它是这样解释的-："><span class="nav-number">1.</span> <span class="nav-text">今天去Express官网看了一下教程，然后就看到了路由，接着就看到了“路由句柄”这个东西(它是这样解释的)：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#来看几个demo："><span class="nav-number">2.</span> <span class="nav-text">来看几个demo：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#这个时候你应该知道next的作用了："><span class="nav-number">3.</span> <span class="nav-text">这个时候你应该知道next的作用了：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#关于next还有一点就是要说的就是，如果不调用next-，则应该发送一个响应到客户端：res-send-res-json-res-render-……"><span class="nav-number">3.1.</span> <span class="nav-text">关于next还有一点就是要说的就是，如果不调用next()，则应该发送一个响应到客户端：res.send,res.json,res.render ……</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Express的路由响应方法："><span class="nav-number">4.</span> <span class="nav-text">Express的路由响应方法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#记住一下路由的express-Router写法！"><span class="nav-number">5.</span> <span class="nav-text">记住一下路由的express.Router写法！</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Express中cookie和session："><span class="nav-number">6.</span> <span class="nav-text">Express中cookie和session：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#cookie的选项："><span class="nav-number">6.1.</span> <span class="nav-text">cookie的选项：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#session"><span class="nav-number">6.2.</span> <span class="nav-text">session</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

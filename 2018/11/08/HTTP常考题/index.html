@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="好了，看了点考试题，不知道面试时会不会用到，反正先记一下吧。1.如何理解HTTP协议是无状态的【常考】 HTTP协议是无状态的，指的是协议对于事务处理没有记忆能力，服务器不知道客户端是什么状态。也就是说，打开一个服务器上的网页和上一次打开这个服务器上的网页之间没有任何联系。HTTP是一个无状态的面向连接的协议，无状态不代表HTTP不能保持TCP连接，更不能代表HTTP使用的UDP协议（无连接）。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP常考题">
+<meta property="og:url" content="http://yoursite.com/2018/11/08/HTTP常考题/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="好了，看了点考试题，不知道面试时会不会用到，反正先记一下吧。1.如何理解HTTP协议是无状态的【常考】 HTTP协议是无状态的，指的是协议对于事务处理没有记忆能力，服务器不知道客户端是什么状态。也就是说，打开一个服务器上的网页和上一次打开这个服务器上的网页之间没有任何联系。HTTP是一个无状态的面向连接的协议，无状态不代表HTTP不能保持TCP连接，更不能代表HTTP使用的UDP协议（无连接）。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-13T11:31:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTTP常考题">
+<meta name="twitter:description" content="好了，看了点考试题，不知道面试时会不会用到，反正先记一下吧。1.如何理解HTTP协议是无状态的【常考】 HTTP协议是无状态的，指的是协议对于事务处理没有记忆能力，服务器不知道客户端是什么状态。也就是说，打开一个服务器上的网页和上一次打开这个服务器上的网页之间没有任何联系。HTTP是一个无状态的面向连接的协议，无状态不代表HTTP不能保持TCP连接，更不能代表HTTP使用的UDP协议（无连接）。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/08/HTTP常考题/">
+
+
+
+
+
+  <title>HTTP常考题 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/08/HTTP常考题/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">HTTP常考题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-08T17:26:09+08:00">
+                2018-11-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="好了，看了点考试题，不知道面试时会不会用到，反正先记一下吧。"><a href="#好了，看了点考试题，不知道面试时会不会用到，反正先记一下吧。" class="headerlink" title="好了，看了点考试题，不知道面试时会不会用到，反正先记一下吧。"></a>好了，看了点考试题，不知道面试时会不会用到，反正先记一下吧。</h4><h3 id="1-如何理解HTTP协议是无状态的【常考】"><a href="#1-如何理解HTTP协议是无状态的【常考】" class="headerlink" title="1.如何理解HTTP协议是无状态的【常考】"></a>1.如何理解HTTP协议是无状态的【常考】</h3><blockquote>
+<p>HTTP协议是无状态的，指的是协议对于事务处理没有记忆能力，服务器不知道客户端是什么状态。也就是说，打开一个服务器上的网页和上一次打开这个服务器上的网页之间没有任何联系。HTTP是一个无状态的面向连接的协议，无状态不代表HTTP不能保持TCP连接，更不能代表HTTP使用的UDP协议（无连接）。  </p>
+</blockquote>
+<h3 id="2-127-0-0-1与192-168-0-1有什么区别【可能考】"><a href="#2-127-0-0-1与192-168-0-1有什么区别【可能考】" class="headerlink" title="2.127.0.0.1与192.168.0.1有什么区别【可能考】"></a>2.127.0.0.1与192.168.0.1有什么区别【可能考】</h3><blockquote>
+<p>首先明确二者没有区别！两个IP地址的角度不一样，127.0.0.1是从IETF（因特尔工程任务组）规定看，是留给本机使用的IP地址，所有的计算机默认都是相同的。而192.168.0.1其实只是IETF在c类网址中，专门留出给专用网络用的一个网段中的IP而已，该网段包含了192.168.0.1到192.168.255.255中所有的IP地址。</p>
+</blockquote>
+<h3 id="3-从输入URL到页面加载发生了什么【必考】"><a href="#3-从输入URL到页面加载发生了什么【必考】" class="headerlink" title="3.从输入URL到页面加载发生了什么【必考】"></a>3.从输入URL到页面加载发生了什么【必考】</h3><blockquote>
+<p>总体来说分为以下几个过程：  </p>
+<ul>
+<li>DNS解析</li>
+<li>TCP连接</li>
+<li>发送HTTP请求</li>
+<li>服务器处理请求并返回HTTP报文</li>
+<li>浏览器解析渲染页面</li>
+<li>连接结束   </li>
+</ul>
+</blockquote>
+<h3 id="4-Socket连接与HTTP连接的联系与区别（需了解）"><a href="#4-Socket连接与HTTP连接的联系与区别（需了解）" class="headerlink" title="4.Socket连接与HTTP连接的联系与区别（需了解）"></a>4.Socket连接与HTTP连接的联系与区别（需了解）</h3><blockquote>
+<p>由于通常情况下Socket连接就是TCP连接，因此Socket连接一旦建立，通信双方即可开始相互发送数据内容，直到双方连接断开。但在实际网络应用中，客户端到服务器之间的通信往往需要穿越多个中间节点，例如路由器、网关、防火墙等，大部分防火墙默认会关闭长时间处于非活跃状态的连接而导致Socket连接断连，因此需要通过轮询告诉网络，该连接处于活跃状态。<br>而HTTP连接使用的是“请求-响应”的方式，不仅在请求时需要先建立连接，而且需要客户端向服务器发出请求后，服务端才能回复数据。<br>很多情况下，需要服务器端主动向客户端推送数据，保持客户端与服务器数据的实时与同步。此时若双发建立的是Socket连接，服务器就可以直接将数据传送给客户端；若双发建立的是HTTP连接，则服务器需要等到客户端发送一次请求后才能将数据传回给客户端，因此，客户端定时向服务器发送连接请求，不仅可以保持在线，同时也是在“询问”服务器是否有新的数据，如果有就将数据传给客户端。</p>
+</blockquote>
+<h3 id="5-HTTP-TCP-报文结构-必考"><a href="#5-HTTP-TCP-报文结构-必考" class="headerlink" title="5.HTTP(TCP)报文结构(必考)"></a>5.HTTP(TCP)报文结构(必考)</h3><blockquote>
+<p>例如一个100kb的HTML文档需要传送到另外一台计算机，并不会整个文档直接传送过去，可能会切割成几个部分，比如四个分别为25kb的数据段。而每个数据再加上一个TCP首部，就组成了TCP报文。TCP报文包括首部和数据部分。<br>|  TCP首部 |  TCP数据部分  |<br>首部：  </p>
+<ul>
+<li>源端口 source port</li>
+<li>目的端口 destinnation port</li>
+<li>序号 sequence number</li>
+<li>确认号 acknowledgement number</li>
+<li>数据偏移 offset</li>
+<li>保留 reserved</li>
+<li>标志位 tcp flags</li>
+<li>窗口大小 window size</li>
+<li>检验和 checksum</li>
+<li>紧急指针 urgent pointer</li>
+<li>选项 tcp options</li>
+</ul>
+</blockquote>
+<h3 id="6-HTTP缓存机制-常考"><a href="#6-HTTP缓存机制-常考" class="headerlink" title="6.HTTP缓存机制(常考)"></a>6.HTTP缓存机制(常考)</h3><blockquote>
+<p>HTTP的缓存主要利用header里的两个字段来控制：</p>
+<ul>
+<li><code>Cache-control</code>主要包含以下几个字段：<br>1.private：则只有客户端可以缓存<br>2.public：客户端和代理服务器都可以缓存<br>3.max-age：缓存的过期时间<br>4.no-cache：需要使用对比缓存来验证缓存数据<br>5.no-store：所有内存都不会进行缓存</li>
+<li><code>ETag</code>:即用来进行对比缓存，ETag是服务端资源的一个标识码  </li>
+</ul>
+</blockquote>
+<p>  -当客户端发送第一次请求时服务端会下发当前请求资源的标识码Etag，下次再请求时，客户端则会通过header里面的If-None-Match将这个Etag带上，服务端将客户端传来的Etag与最新资源的Etag对比，如果一样，则表示资源没有更新，返回304。  </p>
+<p>通过Cache-control 和 Etag 的配合来实现HTTP的缓存机制。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/02/11-2/" rel="next" title="11.2">
+                <i class="fa fa-chevron-left"></i> 11.2
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/22/坚持打卡第一天/" rel="prev" title="坚持打卡第一天">
+                坚持打卡第一天 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#好了，看了点考试题，不知道面试时会不会用到，反正先记一下吧。"><span class="nav-number">1.</span> <span class="nav-text">好了，看了点考试题，不知道面试时会不会用到，反正先记一下吧。</span></a></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#1-如何理解HTTP协议是无状态的【常考】"><span class="nav-number"></span> <span class="nav-text">1.如何理解HTTP协议是无状态的【常考】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-127-0-0-1与192-168-0-1有什么区别【可能考】"><span class="nav-number"></span> <span class="nav-text">2.127.0.0.1与192.168.0.1有什么区别【可能考】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-从输入URL到页面加载发生了什么【必考】"><span class="nav-number"></span> <span class="nav-text">3.从输入URL到页面加载发生了什么【必考】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Socket连接与HTTP连接的联系与区别（需了解）"><span class="nav-number"></span> <span class="nav-text">4.Socket连接与HTTP连接的联系与区别（需了解）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-HTTP-TCP-报文结构-必考"><span class="nav-number"></span> <span class="nav-text">5.HTTP(TCP)报文结构(必考)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-HTTP缓存机制-常考"><span class="nav-number"></span> <span class="nav-text">6.HTTP缓存机制(常考)</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

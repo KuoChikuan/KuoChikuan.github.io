@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="哇，一个月了没有写博客了，刚开学忙着网管招新，事好多，没怎么学习，最近就学了jQuery的一些基础东西还有看了事件循环（event-loop），然后就看了两篇不同的介绍，可以说理解比较好了，嘻嘻嘻今天我就想写一下event-loop（之前就想写了，只不过没有时间还有我忘写了）。好的，现在来看一个例子：1234567891011setTimeout(function()&amp;#123;   consol">
+<meta property="og:type" content="article">
+<meta property="og:title" content="event-loop">
+<meta property="og:url" content="http://yoursite.com/2018/09/16/event-loop/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="哇，一个月了没有写博客了，刚开学忙着网管招新，事好多，没怎么学习，最近就学了jQuery的一些基础东西还有看了事件循环（event-loop），然后就看了两篇不同的介绍，可以说理解比较好了，嘻嘻嘻今天我就想写一下event-loop（之前就想写了，只不过没有时间还有我忘写了）。好的，现在来看一个例子：1234567891011setTimeout(function()&amp;#123;   consol">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2018/09/16/img/loop.png">
+<meta property="og:updated_time" content="2018-09-16T12:31:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="event-loop">
+<meta name="twitter:description" content="哇，一个月了没有写博客了，刚开学忙着网管招新，事好多，没怎么学习，最近就学了jQuery的一些基础东西还有看了事件循环（event-loop），然后就看了两篇不同的介绍，可以说理解比较好了，嘻嘻嘻今天我就想写一下event-loop（之前就想写了，只不过没有时间还有我忘写了）。好的，现在来看一个例子：1234567891011setTimeout(function()&amp;#123;   consol">
+<meta name="twitter:image" content="http://yoursite.com/2018/09/16/img/loop.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/16/event-loop/">
+
+
+
+
+
+  <title>event-loop | Hexo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/event-loop/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">event-loop</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T16:44:22+08:00">
+                2018-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="哇，一个月了没有写博客了，刚开学忙着网管招新，事好多，没怎么学习，最近就学了jQuery的一些基础东西还有看了事件循环（event-loop），然后就看了两篇不同的介绍，可以说理解比较好了，嘻嘻嘻"><a href="#哇，一个月了没有写博客了，刚开学忙着网管招新，事好多，没怎么学习，最近就学了jQuery的一些基础东西还有看了事件循环（event-loop），然后就看了两篇不同的介绍，可以说理解比较好了，嘻嘻嘻" class="headerlink" title="哇，一个月了没有写博客了，刚开学忙着网管招新，事好多，没怎么学习，最近就学了jQuery的一些基础东西还有看了事件循环（event-loop），然后就看了两篇不同的介绍，可以说理解比较好了，嘻嘻嘻"></a>哇，一个月了没有写博客了，刚开学忙着网管招新，事好多，没怎么学习，最近就学了jQuery的一些基础东西还有看了事件循环（event-loop），然后就看了两篇不同的介绍，可以说理解比较好了，嘻嘻嘻</h3><h4 id="今天我就想写一下event-loop（之前就想写了，只不过没有时间还有我忘写了）。好的，现在来看一个例子："><a href="#今天我就想写一下event-loop（之前就想写了，只不过没有时间还有我忘写了）。好的，现在来看一个例子：" class="headerlink" title="今天我就想写一下event-loop（之前就想写了，只不过没有时间还有我忘写了）。好的，现在来看一个例子："></a>今天我就想写一下event-loop（之前就想写了，只不过没有时间还有我忘写了）。好的，现在来看一个例子：</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">'setTimeout'</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve</span>)</span>&#123;</span><br><span class="line"> <span class="built_in">console</span>.log(<span class="string">'promise'</span>);</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"> <span class="built_in">console</span>.log(<span class="string">'then'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'1'</span>);</span><br></pre></td></tr></table></figure>
+<p>· 这段代码作为宏任务，进入主线程。<br>· 先遇到setTimeout，那么将其回调函数注册后分发到宏任务Event Queue。<br>· 接下来遇到了Promise，new Promise 立即执行，then函数分发到微任务Event Queue。<br>· 遇到了console.log()，立即执行。<br>· 好啦，整体代码script作为第一个宏任务执行结束，看看有哪些微任务？我们发现了then在微任务Event Queue里面，执行。<br>· ok，第一轮事件循环结束了，我们开始第二轮循环，当然要从宏任务Event Queue开始，我们发现了宏任务Event Queue中setTimeout对应的回调函数，立即执行。<br>· 结束。<br><img src="../img/loop.png" alt="loop"><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"> <span class="built_in">console</span>.log(<span class="string">'1'</span>);</span><br><span class="line"></span><br><span class="line"> setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">'2'</span>);</span><br><span class="line"> process.nextTick(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'3'</span>);</span><br><span class="line">  &#125;)</span><br><span class="line">    <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'4'</span>);</span><br><span class="line">        resolve();</span><br><span class="line">    &#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'5'</span>)</span><br><span class="line">    &#125;)</span><br><span class="line"> &#125;)</span><br><span class="line">process.nextTick(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'6'</span>);</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'7'</span>);</span><br><span class="line">    resolve();</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'8'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'9'</span>);</span><br><span class="line">    process.nextTick(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'10'</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'11'</span>);</span><br><span class="line">        resolve();</span><br><span class="line">    &#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'12'</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>这段代码不做详细解释了，直接上答案：整段代码，共进行了三次事件循环，完整的输出为1，7，6，8，2，4，3，5，9，11，10，12。<br>(请注意，node环境下的事件监听依赖libuv与前端环境不完全相同，输出顺序可能会有误差)</p>
+<h4 id="1-js的异步我们从最开头就说javascript是一门单线程语言，不管是什么新框架新语法糖实现的所谓异步，其实都是用同步的方法去模拟的，牢牢把握住单线程这点非常重要。"><a href="#1-js的异步我们从最开头就说javascript是一门单线程语言，不管是什么新框架新语法糖实现的所谓异步，其实都是用同步的方法去模拟的，牢牢把握住单线程这点非常重要。" class="headerlink" title="(1)js的异步我们从最开头就说javascript是一门单线程语言，不管是什么新框架新语法糖实现的所谓异步，其实都是用同步的方法去模拟的，牢牢把握住单线程这点非常重要。"></a>(1)js的异步我们从最开头就说javascript是一门单线程语言，不管是什么新框架新语法糖实现的所谓异步，其实都是用同步的方法去模拟的，牢牢把握住单线程这点非常重要。</h4><p>####(2)事件循环Event Loop事件循环是js实现异步的一种方法，也是js的执行机制。</p>
+<p>####(3)javascript的执行和运行执行和运行有很大的区别，javascript在不同的环境下，比如node，浏览器，Ringo等等，执行方式是不同的。而运行大多指javascript解析引擎，是统一的。</p>
+<p>####(4)setImmediate微任务和宏任务还有很多种类，比如setImmediate等等，执行都是有共同点的，有兴趣的同学可以自行了解。</p>
+<p>####(5)最后的最后 ①javascript是一门单线程语言；②Event Loop是javascript的执行机制；</p>
+<p>###事件循环会无限次地执行，一轮又一轮。只有异步任务的回调函数队列清空了，才会停止执行,每一轮的事件循环，分成六个阶段。这些阶段会依次执行。</p>
+<p>1.timers<br>2.I/O callbacks<br>3.idle, prepare<br>4.poll<br>5.check<br>6.close callbacks</p>
+<p>###每个阶段都有一个先进先出的回调函数队列。只有一个阶段的回调函数队列清空了，该执行的回调函数都执行了，事件循环才会进入下一个阶段。</p>
+<h3 id="要区别一下setTimeout-和-setImmediate-由于setTimeout在-timers-阶段执行，而setImmediate在-check-阶段执行。所以，setTimeout会早于setImmediate完成。"><a href="#要区别一下setTimeout-和-setImmediate-由于setTimeout在-timers-阶段执行，而setImmediate在-check-阶段执行。所以，setTimeout会早于setImmediate完成。" class="headerlink" title="要区别一下setTimeout 和 setImmediate:由于setTimeout在 timers 阶段执行，而setImmediate在 check 阶段执行。所以，setTimeout会早于setImmediate完成。"></a>要区别一下setTimeout 和 setImmediate:由于setTimeout在 timers 阶段执行，而setImmediate在 check 阶段执行。所以，setTimeout会早于setImmediate完成。</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="number">1</span>));</span><br><span class="line">setImmediate(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="number">2</span>));</span><br></pre></td></tr></table></figure>
+<p>###上面代码应该先输出1，再输出2，但是实际执行的时候，结果却是不确定，有时还会先输出2，再输出1。</p>
+<p>###这是因为setTimeout的第二个参数默认为0。但是实际上，Node 做不到0毫秒，最少也需要1毫秒，根据官方文档，第二个参数的取值范围在1毫秒到2147483647毫秒之间。也就是说，setTimeout(f, 0)等同于setTimeout(f, 1)。</p>
+<p>###实际执行的时候，进入事件循环以后，有可能到了1毫秒，也可能还没到1毫秒，取决于系统当时的状况。如果没到1毫秒，那么 timers 阶段就会跳过，进入 check 阶段，先执行setImmediate的回调函数。</p>
+<h3 id="但是，下面的代码一定是先输出2，再输出1。"><a href="#但是，下面的代码一定是先输出2，再输出1。" class="headerlink" title="但是，下面的代码一定是先输出2，再输出1。"></a>但是，下面的代码一定是先输出2，再输出1。</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"></span><br><span class="line">   fs.readFile(<span class="string">'test.js'</span>, () =&gt; &#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="number">1</span>));</span><br><span class="line">  setImmediate(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="number">2</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="上面代码会先进入-I-O-callbacks-阶段，然后是-check-阶段，最后才是-timers-阶段。因此，setImmediate才会早于setTimeout执行。"><a href="#上面代码会先进入-I-O-callbacks-阶段，然后是-check-阶段，最后才是-timers-阶段。因此，setImmediate才会早于setTimeout执行。" class="headerlink" title="上面代码会先进入 I/O callbacks 阶段，然后是 check 阶段，最后才是 timers 阶段。因此，setImmediate才会早于setTimeout执行。"></a>上面代码会先进入 I/O callbacks 阶段，然后是 check 阶段，最后才是 timers 阶段。因此，setImmediate才会早于setTimeout执行。</h3><h3 id="还有一个demo"><a href="#还有一个demo" class="headerlink" title="还有一个demo:"></a>还有一个demo:</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"></span><br><span class="line">   <span class="keyword">const</span> timeoutScheduled = <span class="built_in">Date</span>.now();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 异步任务一：100ms 后执行的定时器</span></span><br><span class="line"></span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> delay = <span class="built_in">Date</span>.now() - timeoutScheduled;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;delay&#125;</span>ms`</span>);</span><br><span class="line">    &#125;, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">    <span class="comment">// 异步任务二：至少需要 200ms 的文件读取</span></span><br><span class="line"></span><br><span class="line">    fs.readFile(<span class="string">'test.js'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> startCallback = <span class="built_in">Date</span>.now();</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">Date</span>.now() - startCallback &lt; <span class="number">200</span>) &#123;</span><br><span class="line">        <span class="comment">// 什么也不做</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="脚本进入第一轮事件循环以后，没有到期的定时器，也没有已经可以执行的-I-O-回调函数，所以会进入-Poll-阶段，等待内核返回文件读取的结果。由于读取小文件一般不会超过-100ms，所以在定时器到期之前，Poll-阶段就会得到结果，因此就会继续往下执行。"><a href="#脚本进入第一轮事件循环以后，没有到期的定时器，也没有已经可以执行的-I-O-回调函数，所以会进入-Poll-阶段，等待内核返回文件读取的结果。由于读取小文件一般不会超过-100ms，所以在定时器到期之前，Poll-阶段就会得到结果，因此就会继续往下执行。" class="headerlink" title="脚本进入第一轮事件循环以后，没有到期的定时器，也没有已经可以执行的 I/O 回调函数，所以会进入 Poll 阶段，等待内核返回文件读取的结果。由于读取小文件一般不会超过 100ms，所以在定时器到期之前，Poll 阶段就会得到结果，因此就会继续往下执行。"></a>脚本进入第一轮事件循环以后，没有到期的定时器，也没有已经可以执行的 I/O 回调函数，所以会进入 Poll 阶段，等待内核返回文件读取的结果。由于读取小文件一般不会超过 100ms，所以在定时器到期之前，Poll 阶段就会得到结果，因此就会继续往下执行。</h3><h3 id="第二轮事件循环，依然没有到期的定时器，但是已经有了可以执行的-I-O-回调函数，所以会进入-I-O-callbacks-阶段，执行fs-readFile的回调函数。这个回调函数需要-200ms，也就是说，在它执行到一半的时候，100ms-的定时器就会到期。但是，必须等到这个回调函数执行完，才会离开这个阶段。"><a href="#第二轮事件循环，依然没有到期的定时器，但是已经有了可以执行的-I-O-回调函数，所以会进入-I-O-callbacks-阶段，执行fs-readFile的回调函数。这个回调函数需要-200ms，也就是说，在它执行到一半的时候，100ms-的定时器就会到期。但是，必须等到这个回调函数执行完，才会离开这个阶段。" class="headerlink" title="第二轮事件循环，依然没有到期的定时器，但是已经有了可以执行的 I/O 回调函数，所以会进入 I/O callbacks 阶段，执行fs.readFile的回调函数。这个回调函数需要 200ms，也就是说，在它执行到一半的时候，100ms 的定时器就会到期。但是，必须等到这个回调函数执行完，才会离开这个阶段。"></a>第二轮事件循环，依然没有到期的定时器，但是已经有了可以执行的 I/O 回调函数，所以会进入 I/O callbacks 阶段，执行fs.readFile的回调函数。这个回调函数需要 200ms，也就是说，在它执行到一半的时候，100ms 的定时器就会到期。但是，必须等到这个回调函数执行完，才会离开这个阶段。</h3><h3 id="第三轮事件循环，已经有了到期的定时器，所以会在-timers-阶段执行定时器。最后输出结果大概是200多毫秒。"><a href="#第三轮事件循环，已经有了到期的定时器，所以会在-timers-阶段执行定时器。最后输出结果大概是200多毫秒。" class="headerlink" title="第三轮事件循环，已经有了到期的定时器，所以会在 timers 阶段执行定时器。最后输出结果大概是200多毫秒。"></a>第三轮事件循环，已经有了到期的定时器，所以会在 timers 阶段执行定时器。最后输出结果大概是200多毫秒。</h3>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/14/8-13/" rel="next" title="8.13">
+                <i class="fa fa-chevron-left"></i> 8.13
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/30/9-30/" rel="prev" title="9.3">
+                9.3 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#哇，一个月了没有写博客了，刚开学忙着网管招新，事好多，没怎么学习，最近就学了jQuery的一些基础东西还有看了事件循环（event-loop），然后就看了两篇不同的介绍，可以说理解比较好了，嘻嘻嘻"><span class="nav-number">1.</span> <span class="nav-text">哇，一个月了没有写博客了，刚开学忙着网管招新，事好多，没怎么学习，最近就学了jQuery的一些基础东西还有看了事件循环（event-loop），然后就看了两篇不同的介绍，可以说理解比较好了，嘻嘻嘻</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#今天我就想写一下event-loop（之前就想写了，只不过没有时间还有我忘写了）。好的，现在来看一个例子："><span class="nav-number">1.1.</span> <span class="nav-text">今天我就想写一下event-loop（之前就想写了，只不过没有时间还有我忘写了）。好的，现在来看一个例子：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-js的异步我们从最开头就说javascript是一门单线程语言，不管是什么新框架新语法糖实现的所谓异步，其实都是用同步的方法去模拟的，牢牢把握住单线程这点非常重要。"><span class="nav-number">1.2.</span> <span class="nav-text">(1)js的异步我们从最开头就说javascript是一门单线程语言，不管是什么新框架新语法糖实现的所谓异步，其实都是用同步的方法去模拟的，牢牢把握住单线程这点非常重要。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#要区别一下setTimeout-和-setImmediate-由于setTimeout在-timers-阶段执行，而setImmediate在-check-阶段执行。所以，setTimeout会早于setImmediate完成。"><span class="nav-number">2.</span> <span class="nav-text">要区别一下setTimeout 和 setImmediate:由于setTimeout在 timers 阶段执行，而setImmediate在 check 阶段执行。所以，setTimeout会早于setImmediate完成。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#但是，下面的代码一定是先输出2，再输出1。"><span class="nav-number">3.</span> <span class="nav-text">但是，下面的代码一定是先输出2，再输出1。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上面代码会先进入-I-O-callbacks-阶段，然后是-check-阶段，最后才是-timers-阶段。因此，setImmediate才会早于setTimeout执行。"><span class="nav-number">4.</span> <span class="nav-text">上面代码会先进入 I/O callbacks 阶段，然后是 check 阶段，最后才是 timers 阶段。因此，setImmediate才会早于setTimeout执行。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#还有一个demo"><span class="nav-number">5.</span> <span class="nav-text">还有一个demo:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#脚本进入第一轮事件循环以后，没有到期的定时器，也没有已经可以执行的-I-O-回调函数，所以会进入-Poll-阶段，等待内核返回文件读取的结果。由于读取小文件一般不会超过-100ms，所以在定时器到期之前，Poll-阶段就会得到结果，因此就会继续往下执行。"><span class="nav-number">6.</span> <span class="nav-text">脚本进入第一轮事件循环以后，没有到期的定时器，也没有已经可以执行的 I/O 回调函数，所以会进入 Poll 阶段，等待内核返回文件读取的结果。由于读取小文件一般不会超过 100ms，所以在定时器到期之前，Poll 阶段就会得到结果，因此就会继续往下执行。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二轮事件循环，依然没有到期的定时器，但是已经有了可以执行的-I-O-回调函数，所以会进入-I-O-callbacks-阶段，执行fs-readFile的回调函数。这个回调函数需要-200ms，也就是说，在它执行到一半的时候，100ms-的定时器就会到期。但是，必须等到这个回调函数执行完，才会离开这个阶段。"><span class="nav-number">7.</span> <span class="nav-text">第二轮事件循环，依然没有到期的定时器，但是已经有了可以执行的 I/O 回调函数，所以会进入 I/O callbacks 阶段，执行fs.readFile的回调函数。这个回调函数需要 200ms，也就是说，在它执行到一半的时候，100ms 的定时器就会到期。但是，必须等到这个回调函数执行完，才会离开这个阶段。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三轮事件循环，已经有了到期的定时器，所以会在-timers-阶段执行定时器。最后输出结果大概是200多毫秒。"><span class="nav-number">8.</span> <span class="nav-text">第三轮事件循环，已经有了到期的定时器，所以会在 timers 阶段执行定时器。最后输出结果大概是200多毫秒。</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
