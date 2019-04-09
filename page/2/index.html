@@ -229,6 +229,141 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/event-loop/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/16/event-loop/" itemprop="url">event-loop</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T16:44:22+08:00">
+                2018-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="哇，一个月了没有写博客了，刚开学忙着网管招新，事好多，没怎么学习，最近就学了jQuery的一些基础东西还有看了事件循环（event-loop），然后就看了两篇不同的介绍，可以说理解比较好了，嘻嘻嘻"><a href="#哇，一个月了没有写博客了，刚开学忙着网管招新，事好多，没怎么学习，最近就学了jQuery的一些基础东西还有看了事件循环（event-loop），然后就看了两篇不同的介绍，可以说理解比较好了，嘻嘻嘻" class="headerlink" title="哇，一个月了没有写博客了，刚开学忙着网管招新，事好多，没怎么学习，最近就学了jQuery的一些基础东西还有看了事件循环（event-loop），然后就看了两篇不同的介绍，可以说理解比较好了，嘻嘻嘻"></a>哇，一个月了没有写博客了，刚开学忙着网管招新，事好多，没怎么学习，最近就学了jQuery的一些基础东西还有看了事件循环（event-loop），然后就看了两篇不同的介绍，可以说理解比较好了，嘻嘻嘻</h3><h4 id="今天我就想写一下event-loop（之前就想写了，只不过没有时间还有我忘写了）。好的，现在来看一个例子："><a href="#今天我就想写一下event-loop（之前就想写了，只不过没有时间还有我忘写了）。好的，现在来看一个例子：" class="headerlink" title="今天我就想写一下event-loop（之前就想写了，只不过没有时间还有我忘写了）。好的，现在来看一个例子："></a>今天我就想写一下event-loop（之前就想写了，只不过没有时间还有我忘写了）。好的，现在来看一个例子：</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">'setTimeout'</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve</span>)</span>&#123;</span><br><span class="line"> <span class="built_in">console</span>.log(<span class="string">'promise'</span>);</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"> <span class="built_in">console</span>.log(<span class="string">'then'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'1'</span>);</span><br></pre></td></tr></table></figure>
+<p>· 这段代码作为宏任务，进入主线程。<br>· 先遇到setTimeout，那么将其回调函数注册后分发到宏任务Event Queue。<br>· 接下来遇到了Promise，new Promise 立即执行，then函数分发到微任务Event Queue。<br>· 遇到了console.log()，立即执行。<br>· 好啦，整体代码script作为第一个宏任务执行结束，看看有哪些微任务？我们发现了then在微任务Event Queue里面，执行。<br>· ok，第一轮事件循环结束了，我们开始第二轮循环，当然要从宏任务Event Queue开始，我们发现了宏任务Event Queue中setTimeout对应的回调函数，立即执行。<br>· 结束。<br><img src="../img/loop.png" alt="loop"><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"> <span class="built_in">console</span>.log(<span class="string">'1'</span>);</span><br><span class="line"></span><br><span class="line"> setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">'2'</span>);</span><br><span class="line"> process.nextTick(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'3'</span>);</span><br><span class="line">  &#125;)</span><br><span class="line">    <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'4'</span>);</span><br><span class="line">        resolve();</span><br><span class="line">    &#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'5'</span>)</span><br><span class="line">    &#125;)</span><br><span class="line"> &#125;)</span><br><span class="line">process.nextTick(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'6'</span>);</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'7'</span>);</span><br><span class="line">    resolve();</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'8'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'9'</span>);</span><br><span class="line">    process.nextTick(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'10'</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'11'</span>);</span><br><span class="line">        resolve();</span><br><span class="line">    &#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'12'</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>这段代码不做详细解释了，直接上答案：整段代码，共进行了三次事件循环，完整的输出为1，7，6，8，2，4，3，5，9，11，10，12。<br>(请注意，node环境下的事件监听依赖libuv与前端环境不完全相同，输出顺序可能会有误差)</p>
+<h4 id="1-js的异步我们从最开头就说javascript是一门单线程语言，不管是什么新框架新语法糖实现的所谓异步，其实都是用同步的方法去模拟的，牢牢把握住单线程这点非常重要。"><a href="#1-js的异步我们从最开头就说javascript是一门单线程语言，不管是什么新框架新语法糖实现的所谓异步，其实都是用同步的方法去模拟的，牢牢把握住单线程这点非常重要。" class="headerlink" title="(1)js的异步我们从最开头就说javascript是一门单线程语言，不管是什么新框架新语法糖实现的所谓异步，其实都是用同步的方法去模拟的，牢牢把握住单线程这点非常重要。"></a>(1)js的异步我们从最开头就说javascript是一门单线程语言，不管是什么新框架新语法糖实现的所谓异步，其实都是用同步的方法去模拟的，牢牢把握住单线程这点非常重要。</h4><p>####(2)事件循环Event Loop事件循环是js实现异步的一种方法，也是js的执行机制。</p>
+<p>####(3)javascript的执行和运行执行和运行有很大的区别，javascript在不同的环境下，比如node，浏览器，Ringo等等，执行方式是不同的。而运行大多指javascript解析引擎，是统一的。</p>
+<p>####(4)setImmediate微任务和宏任务还有很多种类，比如setImmediate等等，执行都是有共同点的，有兴趣的同学可以自行了解。</p>
+<p>####(5)最后的最后 ①javascript是一门单线程语言；②Event Loop是javascript的执行机制；</p>
+<p>###事件循环会无限次地执行，一轮又一轮。只有异步任务的回调函数队列清空了，才会停止执行,每一轮的事件循环，分成六个阶段。这些阶段会依次执行。</p>
+<p>1.timers<br>2.I/O callbacks<br>3.idle, prepare<br>4.poll<br>5.check<br>6.close callbacks</p>
+<p>###每个阶段都有一个先进先出的回调函数队列。只有一个阶段的回调函数队列清空了，该执行的回调函数都执行了，事件循环才会进入下一个阶段。</p>
+<h3 id="要区别一下setTimeout-和-setImmediate-由于setTimeout在-timers-阶段执行，而setImmediate在-check-阶段执行。所以，setTimeout会早于setImmediate完成。"><a href="#要区别一下setTimeout-和-setImmediate-由于setTimeout在-timers-阶段执行，而setImmediate在-check-阶段执行。所以，setTimeout会早于setImmediate完成。" class="headerlink" title="要区别一下setTimeout 和 setImmediate:由于setTimeout在 timers 阶段执行，而setImmediate在 check 阶段执行。所以，setTimeout会早于setImmediate完成。"></a>要区别一下setTimeout 和 setImmediate:由于setTimeout在 timers 阶段执行，而setImmediate在 check 阶段执行。所以，setTimeout会早于setImmediate完成。</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="number">1</span>));</span><br><span class="line">setImmediate(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="number">2</span>));</span><br></pre></td></tr></table></figure>
+<p>###上面代码应该先输出1，再输出2，但是实际执行的时候，结果却是不确定，有时还会先输出2，再输出1。</p>
+<p>###这是因为setTimeout的第二个参数默认为0。但是实际上，Node 做不到0毫秒，最少也需要1毫秒，根据官方文档，第二个参数的取值范围在1毫秒到2147483647毫秒之间。也就是说，setTimeout(f, 0)等同于setTimeout(f, 1)。</p>
+<p>###实际执行的时候，进入事件循环以后，有可能到了1毫秒，也可能还没到1毫秒，取决于系统当时的状况。如果没到1毫秒，那么 timers 阶段就会跳过，进入 check 阶段，先执行setImmediate的回调函数。</p>
+<h3 id="但是，下面的代码一定是先输出2，再输出1。"><a href="#但是，下面的代码一定是先输出2，再输出1。" class="headerlink" title="但是，下面的代码一定是先输出2，再输出1。"></a>但是，下面的代码一定是先输出2，再输出1。</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"></span><br><span class="line">   fs.readFile(<span class="string">'test.js'</span>, () =&gt; &#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="number">1</span>));</span><br><span class="line">  setImmediate(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="number">2</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="上面代码会先进入-I-O-callbacks-阶段，然后是-check-阶段，最后才是-timers-阶段。因此，setImmediate才会早于setTimeout执行。"><a href="#上面代码会先进入-I-O-callbacks-阶段，然后是-check-阶段，最后才是-timers-阶段。因此，setImmediate才会早于setTimeout执行。" class="headerlink" title="上面代码会先进入 I/O callbacks 阶段，然后是 check 阶段，最后才是 timers 阶段。因此，setImmediate才会早于setTimeout执行。"></a>上面代码会先进入 I/O callbacks 阶段，然后是 check 阶段，最后才是 timers 阶段。因此，setImmediate才会早于setTimeout执行。</h3><h3 id="还有一个demo"><a href="#还有一个demo" class="headerlink" title="还有一个demo:"></a>还有一个demo:</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"></span><br><span class="line">   <span class="keyword">const</span> timeoutScheduled = <span class="built_in">Date</span>.now();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 异步任务一：100ms 后执行的定时器</span></span><br><span class="line"></span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> delay = <span class="built_in">Date</span>.now() - timeoutScheduled;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;delay&#125;</span>ms`</span>);</span><br><span class="line">    &#125;, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">    <span class="comment">// 异步任务二：至少需要 200ms 的文件读取</span></span><br><span class="line"></span><br><span class="line">    fs.readFile(<span class="string">'test.js'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> startCallback = <span class="built_in">Date</span>.now();</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">Date</span>.now() - startCallback &lt; <span class="number">200</span>) &#123;</span><br><span class="line">        <span class="comment">// 什么也不做</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="脚本进入第一轮事件循环以后，没有到期的定时器，也没有已经可以执行的-I-O-回调函数，所以会进入-Poll-阶段，等待内核返回文件读取的结果。由于读取小文件一般不会超过-100ms，所以在定时器到期之前，Poll-阶段就会得到结果，因此就会继续往下执行。"><a href="#脚本进入第一轮事件循环以后，没有到期的定时器，也没有已经可以执行的-I-O-回调函数，所以会进入-Poll-阶段，等待内核返回文件读取的结果。由于读取小文件一般不会超过-100ms，所以在定时器到期之前，Poll-阶段就会得到结果，因此就会继续往下执行。" class="headerlink" title="脚本进入第一轮事件循环以后，没有到期的定时器，也没有已经可以执行的 I/O 回调函数，所以会进入 Poll 阶段，等待内核返回文件读取的结果。由于读取小文件一般不会超过 100ms，所以在定时器到期之前，Poll 阶段就会得到结果，因此就会继续往下执行。"></a>脚本进入第一轮事件循环以后，没有到期的定时器，也没有已经可以执行的 I/O 回调函数，所以会进入 Poll 阶段，等待内核返回文件读取的结果。由于读取小文件一般不会超过 100ms，所以在定时器到期之前，Poll 阶段就会得到结果，因此就会继续往下执行。</h3><h3 id="第二轮事件循环，依然没有到期的定时器，但是已经有了可以执行的-I-O-回调函数，所以会进入-I-O-callbacks-阶段，执行fs-readFile的回调函数。这个回调函数需要-200ms，也就是说，在它执行到一半的时候，100ms-的定时器就会到期。但是，必须等到这个回调函数执行完，才会离开这个阶段。"><a href="#第二轮事件循环，依然没有到期的定时器，但是已经有了可以执行的-I-O-回调函数，所以会进入-I-O-callbacks-阶段，执行fs-readFile的回调函数。这个回调函数需要-200ms，也就是说，在它执行到一半的时候，100ms-的定时器就会到期。但是，必须等到这个回调函数执行完，才会离开这个阶段。" class="headerlink" title="第二轮事件循环，依然没有到期的定时器，但是已经有了可以执行的 I/O 回调函数，所以会进入 I/O callbacks 阶段，执行fs.readFile的回调函数。这个回调函数需要 200ms，也就是说，在它执行到一半的时候，100ms 的定时器就会到期。但是，必须等到这个回调函数执行完，才会离开这个阶段。"></a>第二轮事件循环，依然没有到期的定时器，但是已经有了可以执行的 I/O 回调函数，所以会进入 I/O callbacks 阶段，执行fs.readFile的回调函数。这个回调函数需要 200ms，也就是说，在它执行到一半的时候，100ms 的定时器就会到期。但是，必须等到这个回调函数执行完，才会离开这个阶段。</h3><h3 id="第三轮事件循环，已经有了到期的定时器，所以会在-timers-阶段执行定时器。最后输出结果大概是200多毫秒。"><a href="#第三轮事件循环，已经有了到期的定时器，所以会在-timers-阶段执行定时器。最后输出结果大概是200多毫秒。" class="headerlink" title="第三轮事件循环，已经有了到期的定时器，所以会在 timers 阶段执行定时器。最后输出结果大概是200多毫秒。"></a>第三轮事件循环，已经有了到期的定时器，所以会在 timers 阶段执行定时器。最后输出结果大概是200多毫秒。</h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/14/8-13/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1332,161 +1467,6 @@ app.get(path,callback)中的callback只能是函数
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/17/js-note/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/17/js-note/" itemprop="url">js note</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-17T16:47:43+08:00">
-                2018-07-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="JavaScript-原型："><a href="#JavaScript-原型：" class="headerlink" title="JavaScript 原型："></a>JavaScript 原型：</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.name = <span class="string">'Kevin'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> Person;</span><br><span class="line"></span><br><span class="line">person.name = <span class="string">'Daisy'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(person.name) <span class="comment">//Daisy</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">delete</span> person.name;</span><br><span class="line"><span class="built_in">console</span>.log(person.name) <span class="comment">//Kevin</span></span><br></pre></td></tr></table></figure>
-<p>原型的原型：(原型也是一个对象)<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line">obj.name = <span class="string">'David'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(obj.name); <span class="comment">//David</span></span><br></pre></td></tr></table></figure></p>
-<p>重要的东西：  </p>
-<pre><code>Person.prototype == Person.prototype;
-Person.prototype.constructor == Person;
-person.__proto__ == Person.prototype;
-Person.prototype.__proto__ == Object.prototype; 
-Object.prototype.constructor == Object();
-Object() == Object.prototype;
-Object.prototype.__proto__ == null;  
-</code></pre><p>补充 1.:  </p>
-<pre><code>function Person(){
-var person = new Person();
-console.log(person.constructor === Person; //true
-person.constructor === Person.prototype.constructor; //true
-}
-</code></pre><p>当获取 person.constructor 时，其实 person 中并没有 constructor 属性,当不能读取到constructor 属性时，会从 person 的原型也就是 Person.prototype 中读取，正好原型中有该属性.</p>
-<p>补充 2.：<br>其次是 <strong>proto</strong> ，绝大部分浏览器都支持这个非标准的方法访问原型，然而它并不存在于 Person.prototype 中，实际上，它是来自于 Object.prototype ，与其说是一个属性，不如说是一个 getter/setter，当使用 obj.<strong>proto</strong> 时，可以理解成返回了 Object.getPrototypeOf(obj)。</p>
-<p> 补充3.：<br> 真的是继承吗？<br>最后是关于继承，前面我们讲到“每一个对象都会从原型‘继承’属性”，实际上，继承是一个十分具有迷惑性的说法，引用《你不知道的JavaScript》中的话，就是：</p>
-<p>继承意味着复制操作，然而 JavaScript 默认并不会复制对象的属性，相反，JavaScript 只是在两个对象之间创建一个关联，这样，一个对象就可以通过委托访问另一个对象的属性和函数，所以与其叫继承，委托的说法反而更准确些。</p>
-<h3 id="词法作用域和动态作用域"><a href="#词法作用域和动态作用域" class="headerlink" title="词法作用域和动态作用域"></a>词法作用域和动态作用域</h3><h4 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h4><pre><code>JavaScript 采用词法作用域，也就是静态作用域。
-</code></pre><h4 id="静态作用域和动态作用域"><a href="#静态作用域和动态作用域" class="headerlink" title="静态作用域和动态作用域"></a>静态作用域和动态作用域</h4><pre><code>因为 JavaScript 采用的是词法作用域，函数的作用域在函数定义的时候就决定了。
-而与词法作用域相对的是动态作用域，函数的作用域是在函数调用的时候才决定的。
-</code></pre><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">     <span class="keyword">var</span> scope = <span class="string">"global scope"</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkscope</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> scope = <span class="string">"local scope"</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> scope;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f();</span><br><span class="line">&#125;</span><br><span class="line">checkscope(); <span class="comment">// local scope</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">``</span><span class="string">` javascript</span></span><br><span class="line"><span class="string">     var scope = "global scope";</span></span><br><span class="line"><span class="string">function checkscope()&#123;</span></span><br><span class="line"><span class="string">    var scope = "local scope";</span></span><br><span class="line"><span class="string">    function f()&#123;</span></span><br><span class="line"><span class="string">        return scope;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">    return f;</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">checkscope()();  // local scope</span></span><br><span class="line"><span class="string">`</span><span class="string">``</span></span><br></pre></td></tr></table></figure>
-<h5 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h5><p>解释1：因为JavaScript采用的是词法作用域，函数的作用域基于函数创建的位置<br>解释2：JavaScript 函数的执行用到了作用域链，这个作用域链是在函数定义的时候创建的。嵌套的函数 f() 定义在这个作用域链里，其中的变量 scope 一定是局部变量，不管何时何地执行函数 f()，这种绑定在执行 f() 时依然有效。<br>其实我很想知道为什么有什么不同的（要了解上下文栈才可以）</p>
-<h4 id="好吧，上下文栈来了，有一点点看不懂啊哈哈，慢慢来吧"><a href="#好吧，上下文栈来了，有一点点看不懂啊哈哈，慢慢来吧" class="headerlink" title="好吧，上下文栈来了，有一点点看不懂啊哈哈，慢慢来吧:"></a>好吧，上下文栈来了，有一点点看不懂啊哈哈，慢慢来吧:</h4><p>先来看两个demo：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'foo1'</span>);</span><br><span class="line">&#125;</span><br><span class="line">foo(); <span class="comment">//foo1</span></span><br><span class="line"> <span class="keyword">var</span> foo = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'foo2'</span>);</span><br><span class="line">&#125;</span><br><span class="line">foo(); <span class="comment">// foo2</span></span><br></pre></td></tr></table></figure></p>
-<p>相信这一段代码很容易明白(毕竟也很容易理解嘛)，来看下一个<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'foo1'</span>);</span><br><span class="line">&#125;</span><br><span class="line">foo();  <span class="comment">// foo2</span></span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'foo2'</span>);</span><br><span class="line">&#125;</span><br><span class="line">foo(); <span class="comment">// foo2</span></span><br></pre></td></tr></table></figure></p>
-<p>嗯，为什么？(其实我也很懵逼)它写着变量提升和函数提升，<font color="#FF0000">“第二个demo值得记住的</font>,刚刚看了一下函数提升和变量提升，嗯，总结一下</p>
-<h4 id="函数声明提升和变量声明提升"><a href="#函数声明提升和变量声明提升" class="headerlink" title="函数声明提升和变量声明提升"></a>函数声明提升和变量声明提升</h4><h5 id="其实要知道，只有函数声明才会提升，当函数是函数字面量-就是var-a-function-这样子的就不会提升。在同时含有函数声明和变量声明的例子中，函数声明优先级大于变量声明的，来看几个demo就明白了："><a href="#其实要知道，只有函数声明才会提升，当函数是函数字面量-就是var-a-function-这样子的就不会提升。在同时含有函数声明和变量声明的例子中，函数声明优先级大于变量声明的，来看几个demo就明白了：" class="headerlink" title="其实要知道，只有函数声明才会提升，当函数是函数字面量(就是var a = function(){})这样子的就不会提升。在同时含有函数声明和变量声明的例子中，函数声明优先级大于变量声明的，来看几个demo就明白了："></a>其实要知道，只有函数声明才会提升，当函数是函数字面量(就是var a = function(){})这样子的就不会提升。在同时含有函数声明和变量声明的例子中，函数声明优先级大于变量声明的，来看几个demo就明白了：</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">    <span class="built_in">console</span>.log(a)  <span class="comment">// f a() &#123; console.log(a) &#125;</span></span><br><span class="line">   <span class="built_in">console</span>.log(b) <span class="comment">//undefined    </span></span><br><span class="line">     <span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(a) </span><br><span class="line">&#125;</span><br><span class="line">     <span class="keyword">var</span> b = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(b)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> <span class="built_in">console</span>.log(c);   <span class="comment">//undefined</span></span><br><span class="line"> <span class="keyword">var</span> c = <span class="string">"第一次没打印出来，第二次才出来"</span>;</span><br><span class="line"> <span class="built_in">console</span>.log(c);   <span class="comment">//第一次没打印出来，第二次才出来</span></span><br><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">     <span class="built_in">console</span>.log(d); <span class="comment">//undefined</span></span><br><span class="line">     <span class="keyword">var</span> d = <span class="string">'和前面的一样啊'</span>;</span><br><span class="line">     <span class="built_in">console</span>.log(d); <span class="comment">//和前面的一样啊</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">var</span> getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"> <span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">  &#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getName</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line"> <span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line"> &#125;</span><br><span class="line"> getName(); <span class="comment">//2</span></span><br></pre></td></tr></table></figure>
-<p>为什么这个是2？<br>原因：函数声明去到了顶部，然后呢又定义了getName，假如getName只声明了没有用值覆盖，结果是1没有错，可是被值覆盖了，就会输出2；<br>原因demo<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = funtion () &#123;</span><br><span class="line">       <span class="built_in">console</span>.log(<span class="number">10</span>)</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">var</span> a;</span><br><span class="line">   <span class="built_in">console</span>.log(a);    <span class="comment">// f a() &#123;console.log(10)&#125;</span></span><br><span class="line">   <span class="built_in">console</span>.log(a());  <span class="comment">//  undefined</span></span><br><span class="line"></span><br><span class="line">   a = <span class="number">3</span>;</span><br><span class="line">   <span class="built_in">console</span>.log(a)   <span class="comment">//3</span></span><br><span class="line">   a = <span class="number">6</span>;</span><br><span class="line">   <span class="built_in">console</span>.log(a());   <span class="comment">//a() is not a function;</span></span><br></pre></td></tr></table></figure></p>
-<h4 id="什么叫执行上下文？-举个例子：当执行到一个函数的时候，就会进行准备工作，这里的“准备工作”，让我们用个更专业一点的说法，就叫做”执行上下文”。"><a href="#什么叫执行上下文？-举个例子：当执行到一个函数的时候，就会进行准备工作，这里的“准备工作”，让我们用个更专业一点的说法，就叫做”执行上下文”。" class="headerlink" title="什么叫执行上下文？ 举个例子：当执行到一个函数的时候，就会进行准备工作，这里的“准备工作”，让我们用个更专业一点的说法，就叫做”执行上下文”。"></a>什么叫执行上下文？ 举个例子：当执行到一个函数的时候，就会进行准备工作，这里的“准备工作”，让我们用个更专业一点的说法，就叫做”执行上下文”。</h4><p>来，继续看demo：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">var</span> scope = <span class="string">"global scope"</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkscope</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> scope = <span class="string">"local scope"</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> scope;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f();</span><br><span class="line">&#125;</span><br><span class="line">checkscope();</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">var</span> scope = <span class="string">"global scope"</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkscope</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> scope = <span class="string">"local scope"</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> scope;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f;</span><br><span class="line">&#125;</span><br><span class="line">checkscope()();</span><br></pre></td></tr></table></figure>
-<p>两个demo执行效果一样，但是两个的执行上下文栈的变化不一样，第一个是<br>ECStack.push(checkscope functionContext);<br>ECStack.push(f functionContext);<br>ECStack.pop();<br>ECStack.pop();<br>第二个是<br>ECStack.push(checkscope functionContext);<br>ECStack.pop();<br>ECStack.push(f functionContext);<br>ECStack.pop();</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1537,7 +1517,7 @@ person.constructor === Person.prototype.constructor; //true
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
