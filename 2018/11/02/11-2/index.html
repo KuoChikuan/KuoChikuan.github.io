@@ -86,12 +86,12 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="前言：回家了4天，啥都没有干，就是学了科目三，做好了晚上复习复变的计划被练车身体太累给取消了。。幸好科目三过了（下周可以拿证了！可以在大学城飙车了，无奈老爸不给我把家里的车开过来哈哈哈，只能开共享汽车了）好了，不多说了，最近看的东西有点杂，不过也是在复习之前学过的东西，方便自己加深记忆。1.HTTP（熟悉到再也不能熟悉了，之前暑假看过书，看过视频了） HTTP是基于TCP/IP协议通信协议来传递数">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="d:/blog/source/img/http.jpg">
-<meta property="og:updated_time" content="2018-11-02T12:08:46.000Z">
+<meta property="og:image" content="http://yoursite.com/2018/11/02/img/http.jpg">
+<meta property="og:updated_time" content="2019-04-09T04:36:30.489Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="11.2">
 <meta name="twitter:description" content="前言：回家了4天，啥都没有干，就是学了科目三，做好了晚上复习复变的计划被练车身体太累给取消了。。幸好科目三过了（下周可以拿证了！可以在大学城飙车了，无奈老爸不给我把家里的车开过来哈哈哈，只能开共享汽车了）好了，不多说了，最近看的东西有点杂，不过也是在复习之前学过的东西，方便自己加深记忆。1.HTTP（熟悉到再也不能熟悉了，之前暑假看过书，看过视频了） HTTP是基于TCP/IP协议通信协议来传递数">
-<meta name="twitter:image" content="d:/blog/source/img/http.jpg">
+<meta name="twitter:image" content="http://yoursite.com/2018/11/02/img/http.jpg">
 
 
 
@@ -315,7 +315,7 @@
 <blockquote>
 <p>持久连接的特点（keep-alive）：主要任意一端没有明确提出断开连接，则保持TCP连接状态。持久连接的好处在于减少了TCP连接的重复建立和断开所造成的额外开销，减轻了服务器端的负载。另外， 减少开销的那部分时间，使HTTP请求和响应能够更早地结束，这样Web页面的显示速度也就相应提高了。<br>管线化：持久连接使得多数请求以管线化方式发送成为可能，这样就能够做到同时并行发送多个请求，而不需要一个接一个地等待响应了。通俗地讲，请求打包一次传输过去，响应打包一次传递回来。管线化的前提是在持久连接下。管道机制则是允许浏览器同时发出这十个请求，但是服务器还是按照顺序，先回应A请求，完成后再回应B请求。  </p>
 </blockquote>
-<p>持久连接：请求1 -&gt; 响应1 -&gt; 请求2 -&gt; 响应2 -&gt; 请求3 -&gt; 响应3<br>管线化方式：请求1 -&gt; 请求2 -&gt; 请求3 -&gt; 响应1 -&gt; 响应2 -&gt; 响应3<br><img src="D:/blog/source/img/http.jpg" alt="HTTP"><br>找了一张图，果断上！</p>
+<p>持久连接：请求1 -&gt; 响应1 -&gt; 请求2 -&gt; 响应2 -&gt; 请求3 -&gt; 响应3<br>管线化方式：请求1 -&gt; 请求2 -&gt; 请求3 -&gt; 响应1 -&gt; 响应2 -&gt; 响应3<br><img src="../img/http.jpg" alt="HTTP"><br>找了一张图，果断上！</p>
 <h4 id="2-Promise（emmm，博客是有比较多的Promise-的了，只不过有时候看到其他介绍Promise而博客没有的我就记录一下而已）"><a href="#2-Promise（emmm，博客是有比较多的Promise-的了，只不过有时候看到其他介绍Promise而博客没有的我就记录一下而已）" class="headerlink" title="2.Promise（emmm，博客是有比较多的Promise 的了，只不过有时候看到其他介绍Promise而博客没有的我就记录一下而已）"></a>2.Promise（emmm，博客是有比较多的Promise 的了，只不过有时候看到其他介绍Promise而博客没有的我就记录一下而已）</h4><blockquote>
 <p>回调：来看一些情况：  </p>
 <ol>
